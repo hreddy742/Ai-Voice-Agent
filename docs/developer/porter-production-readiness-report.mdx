@@ -1,0 +1,69 @@
+# Porter production readiness report
+
+## Summary
+
+The Porter local-first voice-agent foundation is implemented for local
+simulation and review. Production outbound calling is not enabled.
+
+## Implemented architecture
+
+- Dograh local stack with telemetry disabled.
+- Porter-owned PostgreSQL tables.
+- Mock Porter leads.
+- Deterministic policy engine.
+- Sales state machine.
+- Ollama-compatible local LLM adapter.
+- Placeholder approved KB v1.
+- Local text conversation runner.
+- Safe TTS/STT/VAD adapter boundaries.
+- Local web-call simulation bridge.
+- Objection handling.
+- Evaluation suite.
+- Local review API.
+
+## Local model status
+
+Ollama is installed. Existing local fallback models include `llama3.1:latest`
+and `gemma4:latest`. The recommended low-latency target remains `qwen3:4b`;
+`qwen3:8b` is the quality upgrade if latency passes.
+
+## Test status
+
+Focused Porter suite passes locally in Docker. The latest run covered schema,
+fixtures, policy, state machine, LLM, KB, local text, TTS, STT, VAD, local
+web-call bridge, objections, evaluation, and review.
+
+## Known limitations
+
+- KB content is placeholder approved starter content.
+- Kokoro, faster-whisper, and Silero are adapter boundaries, not installed
+  production engines.
+- Feature 13 is a local web-call simulation bridge, not deep Pipecat WebRTC
+  runtime interception.
+- No real telephony provider is configured.
+- No Salesforce sync is implemented.
+
+## Security concerns
+
+- Keep all secrets in environment variables or secret storage.
+- Do not expose local tunnels without explicit approval.
+- Do not store real recordings until legal approval.
+- Do not use real lead PII in local tests.
+
+## Compliance blockers
+
+Before real outbound calls:
+
+- TCPA review
+- DNC policy
+- state call-recording consent rules
+- AI voice disclosure approval
+- data retention policy
+- opt-out process
+- human review policy
+
+## Recommendation
+
+Continue with local web-call QA and deeper Dograh/Pipecat integration only after
+reviewing the local simulation outputs. Do not proceed to internal phone tests
+without separate explicit approval.

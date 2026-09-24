@@ -1,0 +1,23 @@
+# Porter local review view
+
+Feature 16 exposes local review data through `api.porter.review` and the
+`/api/v1/porter-local` API routes.
+
+Endpoints:
+
+```http
+GET /api/v1/porter-local/call-sessions
+GET /api/v1/porter-local/call-sessions/{call_session_id}
+```
+
+The detail endpoint includes:
+
+- lead/session summary
+- ordered transcript turns
+- qualification answers
+- outcome
+- policy violations
+- agent events
+
+This is a local review surface only. It does not push to CRM or trigger external
+notifications.

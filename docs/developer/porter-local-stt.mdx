@@ -1,0 +1,27 @@
+# Porter local STT adapter
+
+Porter local validation defines a file-transcription boundary in
+`api.porter.stt`.
+
+Current safe default:
+
+- `MockSTTAdapter` for deterministic tests.
+- `safe_transcribe_file` converts adapter failures into failed `STTResult`
+  objects so a call session can continue to a fallback/handoff path.
+- `record_stt_transcript_turn` persists successful STT output into Porter
+  transcript turns with confidence and audio duration metadata.
+
+Future local engine path:
+
+```bash
+pip install faster-whisper
+```
+
+Then use:
+
+```python
+FasterWhisperSTTAdapter(model_name="base.en", device="cpu")
+```
+
+Dograh also supports Speaches-compatible local STT servers for realtime use.
+No cloud STT or paid API is required for the current Porter local test path.

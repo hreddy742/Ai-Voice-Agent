@@ -1,0 +1,21 @@
+# Porter knowledge base v1
+
+Porter local validation uses an approved static knowledge base before any model
+can answer funding questions. The KB avoids exact rates and unsupported approval
+claims.
+
+Load it locally with:
+
+```bash
+python -m api.porter.load_knowledge_base --replace
+```
+
+The default version is `porter-kb-v1`.
+
+## Safety rules
+
+- Rate questions return: `Rates depend on qualification and review.`
+- Unknown questions return: `I can send this to the Porter team for review.`
+- Answers include internal `chunk_ids` and source titles for traceability.
+- Downstream agent code should pass KB-supported drafts through
+  `PorterPolicyEngine` before speech or final storage.

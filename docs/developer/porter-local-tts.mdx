@@ -1,0 +1,26 @@
+# Porter local TTS adapter
+
+Porter local validation defines a TTS boundary in `api.porter.tts`.
+
+Current safe default:
+
+- `SafeTTSAdapter(StubTTSAdapter())`
+- Generates deterministic local WAV files for pipeline tests.
+- Rejects unsafe text before audio generation.
+
+Kokoro path:
+
+```bash
+pip install kokoro-onnx
+```
+
+Then configure model assets before using `KokoroTTSAdapter`:
+
+```bash
+PORTER_KOKORO_MODEL_PATH=/path/to/kokoro-v1.0.onnx
+PORTER_KOKORO_VOICES_PATH=/path/to/voices.bin
+```
+
+Kokoro is not currently installed in the local Python environment. The adapter
+therefore fails closed with `PorterTTSDependencyError` until dependencies and
+model assets are intentionally installed.

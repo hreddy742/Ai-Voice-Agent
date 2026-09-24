@@ -1,0 +1,51 @@
+# Porter sales conversation playbook
+
+This playbook defines the public, source-backed conversation patterns that can
+be used in Porter's commercial voice agent without importing third-party call
+recordings or unsupported claims.
+
+## Sources evaluated
+
+- Gong's public analysis of 300M+ cold calls reports that a tailored,
+  permission-based opener should lead with context, acknowledge the cold call,
+  and ask permission to continue:
+  https://www.gong.io/blog/the-best-and-worst-cold-call-openers-backed-by-data-from-300m-calls
+- HubSpot's 2025 survey of 379 sales professionals found that most script users
+  adapt their scripts, and identified research, personalization, active
+  listening, adaptability, and strategic questioning as important skills:
+  https://blog.hubspot.com/sales/state-of-cold-calling
+- Salesforce's public campaign playbook recommends three to five focused
+  discovery questions, explicit objection handling, and clear handoff criteria:
+  https://www.salesforce.com/en-us/wp-content/uploads/sites/4/documents/partners/gtm-offerings/isv-agentforce-marketing-playbook.pdf
+- Gong's Call Playbook code is MIT licensed, but its gated conversation dataset
+  is licensed only for non-commercial academic research. Its license forbids
+  incorporating the dataset into a product or service:
+  https://huggingface.co/datasets/gong-io-research/call-playbook
+
+## Porter implementation rules
+
+1. Use one permission gate. After consent, move directly into a short value
+   statement and one discovery question. Do not ask for permission twice.
+2. Treat scripts as guarded talk tracks. Locked facts, disclosures, rates, and
+   compliance language remain deterministic; acknowledgements and transitions
+   may vary within approved boundaries.
+3. Ask one question per turn. Reflect a meaningful prospect answer before the
+   next question, without generic praise or filler.
+4. Answer factual interruptions from the locked Porter knowledge, then resume
+   the pending discovery question.
+5. Handle an objection once, listen to the answer, and either continue,
+   schedule a callback, hand off, or close respectfully. Never loop pressure.
+6. End with a concrete next action and collect only the contact and
+   qualification fields required for that action.
+7. Use only consented Porter conversations for product evaluation or future
+   training. Redact PII, retain source and consent metadata, and keep test and
+   production corpora separate.
+
+## Current call shape
+
+`context and disclosure -> permission -> value plus discovery -> current
+financing -> pain -> volume -> advisor handoff -> confirmed close`
+
+Global interruptions such as rates, identity, AI disclosure, callbacks,
+voicemail, wrong person, and stop requests take priority over the current
+discovery stage.

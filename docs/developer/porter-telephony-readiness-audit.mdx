@@ -1,0 +1,65 @@
+# Porter telephony readiness audit
+
+Feature 17 is an audit only. Outbound calls remain disabled.
+
+## Dograh telephony abstraction
+
+Dograh routes provider-specific call handling through telephony provider modules
+and workflow run modes. Existing documentation and code paths reference Twilio,
+Plivo, Telnyx, Vonage/Vobiz-style providers, ARI, WebRTC, and SmallWebRTC.
+
+## Credentials needed later
+
+Before any internal phone test, Porter must provide sandbox/test credentials for
+one approved telephony provider:
+
+- account identifier
+- API key or auth token
+- signing secret or public key for webhook validation
+- internal caller ID or test number
+- approved internal recipient number
+
+No credential should be committed to the repository. All secrets must stay in
+environment variables or Dograh credential storage.
+
+## Public URL and webhook requirements
+
+Phone calls require a public HTTPS webhook/WSS URL. For local testing this may
+require a tunnel, but tunneling exposes local services beyond the machine. Use it
+only for a separately approved internal phone test.
+
+## Recording and consent requirements
+
+Do not record real calls until Porter approves:
+
+- state call-recording consent rules
+- AI voice disclosure language
+- retention period
+- access controls
+- deletion process
+
+## Human transfer readiness
+
+Before real calls, define:
+
+- when the agent must transfer or stop
+- approved human destination numbers
+- after-hours behavior
+- failed-transfer fallback
+
+## Opt-out and DNC blockers
+
+Production outbound calling cannot start until Porter confirms:
+
+- TCPA applicability
+- internal DNC process
+- federal/state DNC checks
+- consent/permission basis
+- opt-out handling
+- call cadence limits
+- audit trail requirements
+
+## Recommendation
+
+Continue local web-call and internal simulation validation. Do not enable
+outbound telephony until compliance review and explicit separate approval.

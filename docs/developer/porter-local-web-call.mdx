@@ -1,0 +1,24 @@
+# Porter local web-call bridge
+
+Feature 13 uses `api.porter.local_web_call` as the local-only bridge between
+Porter conversation logic and a web-call style surface.
+
+API endpoint:
+
+```http
+POST /api/v1/porter-local/web-call-simulations
+```
+
+This endpoint:
+
+- Uses mock Porter leads or a supplied `lead_id`.
+- Runs the Porter state machine, placeholder KB, LLM adapter, policy engine,
+  transcript persistence, qualification persistence, and outcome persistence.
+- Optionally generates local safe WAV audio previews for assistant turns through
+  `SafeTTSAdapter`.
+- Defaults to a deterministic mock LLM response for reliable local simulation.
+  Set `use_live_llm: true` only when the API process can reach Ollama.
+- Explicitly leaves telephony, CRM sync, email, and SMS disabled.
+
+This is not production outbound calling. It is the safe local bridge to validate
+Porter behavior before deeper Dograh WebRTC/Pipecat runtime wiring.

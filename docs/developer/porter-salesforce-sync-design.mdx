@@ -1,0 +1,67 @@
+# Porter Salesforce sync design
+
+Feature 19 is design only. No Salesforce push is implemented.
+
+## Sync status lifecycle
+
+- `not_ready`: default for local/test calls.
+- `ready_for_review`: local validation produced an outcome and transcript.
+- `approved_for_sync`: a human approved the record for CRM sync.
+- `synced`: Salesforce accepted the payload.
+- `failed`: sync attempted and failed.
+
+The current database has `not_ready`, `ready`, `synced`, `failed`, and
+`disabled`. A later migration should align names before implementation.
+
+## Human approval requirement
+
+No Porter call outcome should sync automatically. A human reviewer must approve:
+
+- lead identity
+- transcript quality
+- qualification answers
+- disposition
+- policy violations
+- next action
+
+## Candidate field mapping
+
+- Porter lead company name -> Salesforce Account/Lead company
+- contact name -> Lead contact name
+- phone/email/website -> Lead contact fields
+- funding signal type -> custom funding signal field
+- lead score before call -> custom score field
+- call disposition -> activity/disposition field
+- funding need -> custom qualification field
+- funding amount -> custom qualification field
+- monthly revenue -> custom qualification field
+- urgency -> custom qualification field
+- existing factor/lender -> custom qualification field
+- transcript -> activity note or linked secure artifact
+- policy violations -> internal audit note, not customer-facing
+- next action -> task/follow-up field
+
+## Retry and error handling
+
+Later implementation should use a durable sync table or job queue with:
+
+- idempotency key
+- retry count
+- last error
+- next retry time
+- created by / approved by
+- synced object IDs
+
+## Audit log
+
+Every sync attempt should record:
+
+- call session ID
+- payload hash
+- reviewer identity
+- timestamp
+- result
+- external Salesforce IDs
+
+No Salesforce credentials or payload examples with real customer data belong in
+the repository.

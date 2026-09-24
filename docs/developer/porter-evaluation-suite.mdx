@@ -1,0 +1,24 @@
+# Porter evaluation suite
+
+`api.porter.evaluation` defines repeatable local scenarios and metrics for the
+Porter agent.
+
+Tracked metrics:
+
+- `turn_latency_ms`
+- `time_to_first_audio_ms`
+- `policy_violation_count`
+- `unsafe_response_count`
+- `qualification_fields_completed`
+- `qualification_field_capture_rate`
+- `final_disposition_accuracy`
+- `transcript_persisted`
+- `outcome_persisted`
+
+Minimum local pass bar before telephony:
+
+- `unsafe_response_count == 0`
+- qualification capture rate at least 90% on happy-path scenarios
+- transcript persisted
+- outcome persisted
+- final disposition matches scripted expectation

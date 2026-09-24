@@ -1,0 +1,32 @@
+# Porter Mock Leads
+
+Porter local validation uses a small, clearly fake lead fixture set. These records
+are only for local development and test runs. They must not be treated as real
+prospects and must not be used for outbound calls.
+
+The fixture source is `porter_mock_fixture` and includes five synthetic scenarios:
+
+- staffing agency with payroll pressure
+- manufacturer with a large customer/order signal
+- distributor with A/R timing signal
+- B2B services company with growth-driven working capital signal
+- unqualified consumer-retail company
+
+All fixture records use fake company names, `+155501...` phone numbers,
+`.example.invalid` email and website domains, and evidence URLs under
+`signals.example.invalid`.
+
+## Load Locally
+
+After the Porter schema migration is applied, load or refresh the mock leads from
+the API environment:
+
+```bash
+python -m api.porter.load_mock_leads --replace
+```
+
+For Docker-based local validation, run the command in an API container or a
+throwaway container with the same `DATABASE_URL` as Dograh API.
+
+The loader is idempotent by `lead_source + website`. Use `--replace` when you
+want to delete existing `porter_mock_fixture` rows and recreate the fixture set.

@@ -1,0 +1,23 @@
+# Porter VAD and interruption boundary
+
+Porter local validation defines VAD and interruption primitives in
+`api.porter.vad`.
+
+Current local adapter:
+
+- `EnergyVADAdapter`
+- Detects speech in WAV files using a conservative RMS threshold.
+- Handles silence without crashing.
+
+Interruption events:
+
+- `user_started_speaking`
+- `agent_audio_interrupted`
+- `agent_response_cancelled`
+
+The helper `cancel_agent_response_for_interruption` logs the audio interruption
+and response cancellation events for simulation. Full realtime barge-in should
+be wired through Dograh/Pipecat only after the web-call Porter bot is connected.
+
+Silero VAD remains a future local engine option. The `SileroVADAdapter` boundary
+is present and fails closed until dependencies are intentionally installed.

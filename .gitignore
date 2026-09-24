@@ -1,0 +1,42 @@
+__pycache__
+.DS_Store
+.env
+.env.prod
+.env.test
+
+# Conductor personal/per-machine overrides (settings.toml IS committed)
+.conductor/settings.local.toml
+
+# logs and run directory on production
+/logs/
+/run/
+infrastructure/
+prd/
+.vercel
+
+.devcontainer/install.local.sh
+venv/
+.venv/
+.playwright-mcp
+coturn/
+*.wav
+dograh_pcm_cache/
+node_modules/
+.local_models/
+
+# Superpowers brainstorm mockups (local only)
+.superpowers/
+docs/superpowers/
+.gstack/
+
+# Porter local dev scratch (not source)
+.venv313/
+.uv-cache/
+.uv-python/
+.bench-pocket-tts/
+.docker-client/
+.pytest-tmp*/
+.pytest_cache/
+api/.pytest_cache/
+*.log
+scripts/*.log

@@ -1,0 +1,44 @@
+# Porter local LLM adapter
+
+Porter local validation uses `api.porter.llm.OllamaLLMAdapter` for text generation.
+The adapter calls an Ollama-compatible `/api/chat` endpoint and applies
+`PorterPolicyEngine` before returning text to any caller.
+
+## Defaults
+
+- Base URL: `http://localhost:11434`
+- Model: `qwen3:4b`
+- Timeout: `30` seconds
+
+Configure with:
+
+```bash
+PORTER_OLLAMA_BASE_URL=http://localhost:11434
+PORTER_OLLAMA_MODEL=qwen3:4b
+PORTER_OLLAMA_TIMEOUT_SECONDS=30
+```
+
+## Local model setup
+
+Preferred model:
+
+```bash
+ollama pull qwen3:4b
+```
+
+If that model is not available locally, use an installed fallback model:
+
+```bash
+PORTER_OLLAMA_MODEL=llama3.1:latest
+```
+
+On the current local machine, `llama3.1:latest` and `gemma4:latest` were already
+available. A `qwen3:4b` pull was attempted, but did not complete within the local
+command timeout.
+
+## Safety behavior
+
+The adapter returns both `raw_text` and `safe_text`. Downstream code must use
+`safe_text` for anything spoken, stored as final agent output, or sent to a TTS
+adapter. Unsafe generated text is retained only for audit/testing and policy
+violation logging.
